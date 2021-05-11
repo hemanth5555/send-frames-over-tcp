@@ -14,21 +14,6 @@ def to_mb(b: int) -> float:
 
 if __name__=="__main__":
     VIDEO_FILE = "surf.mp4"
-
-    # read video into memory, frame by frame
-    cap = cv.VideoCapture(VIDEO_FILE)
-    frames = list()
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-        frames.append(frame)
-
-        if not ret:
-            print("Can't receive frame (possibly stream end?).")
-            break
-    
-    print("captured {} frames".format(len(frames)))
-    print("average frame size: {:0.3f} Mb".format(to_mb(mean([sys.getsizeof(f) for f in frames]))))
     print("video size: {:0.3f} Mb".format(to_mb(Path(VIDEO_FILE).stat().st_size)))
 
     s = socket(AF_INET, SOCK_STREAM)
@@ -41,8 +26,13 @@ if __name__=="__main__":
         client, addr = s.accept()
         print("connected ...")
 
-        # send frames
-        for frame in frames:
+        # read video into memory, frame by frame
+        cap = cv.VideoCapture(VIDEO_FILE)
+
+        while cap.isOpened():
+            ret, frame = cap.read()
+        
+            # add socket code here
             start = tpf()
 
             # serialize frame
@@ -66,5 +56,9 @@ if __name__=="__main__":
                 dur=end - start
             ))
 
+            if not ret:
+                print("Can't receive frame (possibly stream end?).")
+                break
+        
         client.close()
 
