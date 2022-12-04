@@ -60,10 +60,10 @@ if __name__=="__main__":
         # before calling recv
         print("recv frame time: {:0.3f} seconds".format(end - start))
 
-        cv.imshow("frame", pickle.loads(frame))
-        if cv.waitKey(40) == ord("q"):
-            print("you pressed 'q' and we will exit")
-            break
+        #cv.imshow("frame", pickle.loads(frame))
+        #if cv.waitKey(40) == ord("q"):
+        #    print("you pressed 'q' and we will exit")
+        #    break
 
     s.close()
 
