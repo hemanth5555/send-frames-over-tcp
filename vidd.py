@@ -9,7 +9,7 @@ from time import perf_counter as tpf
 from socket import *
 import cv2 as cv
 from prometheus_client import start_http_server, Counter
-from prometheus_client.core import GaugeMetricFamily, REGISTRY, Count
+from prometheus_client.core import GaugeMetricFamily, REGISTRY, CounterMetricFamily
 import logging
 
 def to_mb(b: int) -> float:
